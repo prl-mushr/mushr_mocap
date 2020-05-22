@@ -5,12 +5,11 @@
   <arg name="car_name" default="car" />
 
   <!-- set static transform between VRPN-published mocap car pose to the car pose (i.e. base_link) -->
-  <node pkg="tf" type="static_transform_publisher" args="0.058325 0.0 -0.08125 0 0 0 vrpn/car/pose $(arg car_name)/car_pose"/>
+  <node pkg="tf" type="static_transform_publisher" name="mocap_static_tf_publisher" args="0.058325 0.0 -0.08125 0 0 0 vrpn/$(arg car_name)/pose $(arg car_name)/car_pose 1000"/>
 
-  <arg name="node_start_delay" default="1.0" />  
-
+  <!-- Set initial pose once with mocap pose and exit. -->
+<!--   <arg name="node_start_delay" default="1.0" />
   <group ns="$(arg car_name)">
-    <!-- Set initial pose once with mocap pose and exit. -->
     <node pkg="mushr_mocap" type="set_initial_pose.py" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
-  </group>
+  </group> -->
 </launch>

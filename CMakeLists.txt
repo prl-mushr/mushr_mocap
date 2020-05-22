@@ -105,9 +105,9 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES mushr_sim
-  CATKIN_DEPENDS 
-    roscpp 
-    rospy 
+  CATKIN_DEPENDS
+    roscpp
+    rospy
     std_msgs
     tf
     tf2_ros
