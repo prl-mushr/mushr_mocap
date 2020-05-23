@@ -7,7 +7,7 @@
       server: $(arg server)
       port: 3883
 
-      update_frequency: 100.0
+      update_frequency: 360.0
       frame_id: map
 
       # Use the VRPN server's time, or the client's ROS time.
@@ -15,7 +15,7 @@
       broadcast_tf: true
 
       # Must either specify refresh frequency > 0.0, or a list of trackers to create
-      refresh_tracker_frequency: 1.0
+      <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
        - car35 # Name of the rigid body asset
        - floor
@@ -27,10 +27,12 @@
   <arg name="car_name" default="car35" />
 
   <!-- set static transform between VRPN-published mocap car pose to the car pose (i.e. base_link) -->
-  <!-- y is up. My car needs to be 180-degrees rotation in y-axis (x-axis is pointing backwards) -->
-  <!-- The point on the top surface in the center of those 4 points has the following offset w.r.t the base_link: (-0.058325, 0.0, 0.08125) (where z is up)-->
-  <node pkg="tf" type="static_transform_publisher" name="mocap_static_tf_publisher" args="0.058325 0. -0.08125 0 1 0 0  $(arg car_name) $(arg car_name)/mocap_pose 1000"/>
+  <!-- The point on the top surface in the center of those 4 points has the following offset w.r.t the base_link: (-0.058325, 0.0, 0.08125)-->
+  <node pkg="tf" type="static_transform_publisher" name="mocap_static_tf_publisher" args="0.058325 0. -0.08125 0 0 1 0  $(arg car_name) $(arg car_name)/mocap_pose 1000"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="mocapd_static_tf_publisher" args="0.058325 0. -0.08125 0 0 1.0 0  $(arg car_name) $(arg car_name)/mocap_pose 1000"/>
-
+  <group ns="$(arg car_name)" >
+    <node pkg="mushr_mocap" type="pose_publisher.py" name="pose_publisher" args="$(arg car_name)" />
+    <arg name="node_start_delay" default="1.0" />
+    <node pkg="mushr_mocap" type="set_initial_pose.py" name="initpose_publisher" args="$(arg car_name)" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+  </group>
 </launch>

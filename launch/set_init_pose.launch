@@ -1,9 +1,9 @@
 <!-- -*- mode: XML -*- -->
 <launch>
-  <arg name="car_name" default="car" />
+  <arg name="car_name" />
 
   <group ns="$(arg car_name)">
     <!-- Set initial pose once with mocap pose and exit. -->
-    <node pkg="mushr_mocap" type="set_initial_pose.py" output="screen"/>
+    <node pkg="mushr_mocap" type="set_initial_pose.py" name="initpose_publisher" args="$(arg car_name)" output="screen"/>
   </group>
 </launch>
