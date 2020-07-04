@@ -56,20 +56,25 @@ sudo apt install ros-[melodic]-vrpn_client_ros
    ```
 
    should return some bytes.
+   
+6. Set $ROS_IP to match the IP of this machine, e.g. 
+```bash
+export ROS_IP=192.168.0.156
+```
 
-6. Launch the vrpn client. See the launch file as an example.
+7. Launch the vrpn client. See the launch file as an example.
 
    ```bash
    roslaunch mushr_mocap vrpn.launch car_name:=car35 # in a new terminal
    ```
 
-7. You should be able to check the raw mocap topic published as `vrpn_client_node/car_name/pose`
+8. You should be able to check the raw mocap topic published as `vrpn_client_node/car_name/pose`
 
    ```bash
    rostopic echo /vrpn_client_node/car35/pose
    ```
 
-8. Publish the transformed car pose (changes the axis orientation and takes into account the offset to base_link):
+9. Publish the transformed car pose (changes the axis orientation and takes into account the offset to base_link):
 
    ```bash
    roslaunch mushr_mocap car_pose_publisher car_name:=car35
@@ -81,7 +86,7 @@ Check the topic
 
    If you want this to be in a different topic name, modify `car_pose_publisher.py`.
 
-9. To publish to `car_name/initialpose` topic,
+10. To publish to `car_name/initialpose` topic,
    ```bash
    roslaunch mushr_mocap set_initial_pose.launch car_name:=car35
    ```
