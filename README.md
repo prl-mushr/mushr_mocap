@@ -23,7 +23,12 @@ This instruction assumes that you're using the windows machine setup in CSE 014 
 
 ## Setting up MuSHR-Mocap
 
-1. In the workspace, clone [vrpn_client_ros](https://github.com/ros-drivers/vrpn_client_ros)
+1. Install `vrpn_client_ros` via :
+```bash
+sudo apt install ros-[melodic]-vrpn_client_ros
+```
+
+(Or clone [vrpn_client_ros](https://github.com/ros-drivers/vrpn_client_ros)
 
    ```bash
    cd ~/catkin_ws/src/
