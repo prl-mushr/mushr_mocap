@@ -25,7 +25,7 @@ This instruction assumes that you're using the windows machine setup in CSE 014 
 
 1. Install `vrpn_client_ros` via :
 ```bash
-sudo apt install ros-[melodic]-vrpn_client_ros
+sudo apt install ros-[melodic]-vrpn-client-ros
 ```
 
 2. Clone this repository
