@@ -28,13 +28,6 @@ This instruction assumes that you're using the windows machine setup in CSE 014 
 sudo apt install ros-[melodic]-vrpn_client_ros
 ```
 
-(Or clone [vrpn_client_ros](https://github.com/ros-drivers/vrpn_client_ros)
-
-   ```bash
-   cd ~/catkin_ws/src/
-   git clone https://github.com/ros-drivers/vrpn_client_ros.git
-   ```
-
 2. Clone this repository
 
    ```bash
