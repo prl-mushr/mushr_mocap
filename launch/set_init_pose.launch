@@ -1,6 +1,6 @@
 <!-- -*- mode: XML -*- -->
 <launch>
-  <arg name="car_name" />
+  <arg name="car_name" default="car35"/>
 
   <group ns="$(arg car_name)">
     <!-- Set initial pose once with mocap pose and exit. -->

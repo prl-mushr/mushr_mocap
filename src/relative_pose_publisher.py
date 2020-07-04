@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# This publishes relative transform between floor and car
 import rospy
 from geometry_msgs.msg import PoseStamped, PoseArray, Pose, PoseWithCovarianceStamped
 import tf
@@ -21,7 +22,7 @@ if __name__ == '__main__':
 
     listener = tf.TransformListener()
 
-    rate = rospy.Rate(360.0)
+    rate = rospy.Rate(240.0)
     while not rospy.is_shutdown():
         try:
             (trans, rot) = listener.lookupTransform(car_tf, floor_tf, rospy.Time(0))

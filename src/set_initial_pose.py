@@ -28,5 +28,3 @@ if __name__ == "__main__":
 
         rate.sleep()
     rospy.logwarn("Sent initial pose for {}:".format(car_name))
-    # except rospy.ROSInterruptException:
-    #     pass

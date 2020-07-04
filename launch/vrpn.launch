@@ -22,17 +22,4 @@
 
     </rosparam>
   </node>
-
-  <!-- Change car name to match the name of the car, e.g. car1 -->
-  <arg name="car_name" default="car35" />
-
-  <!-- set static transform between VRPN-published mocap car pose to the car pose (i.e. base_link) -->
-  <!-- The point on the top surface in the center of those 4 points has the following offset w.r.t the base_link: (-0.058325, 0.0, 0.08125)-->
-  <node pkg="tf" type="static_transform_publisher" name="mocap_static_tf_publisher" args="0.058325 0. -0.08125 0 0 1 0  $(arg car_name) $(arg car_name)/mocap_pose 1000"/>
-
-  <group ns="$(arg car_name)" >
-    <node pkg="mushr_mocap" type="pose_publisher.py" name="pose_publisher" args="$(arg car_name)" />
-    <arg name="node_start_delay" default="1.0" />
-    <node pkg="mushr_mocap" type="set_initial_pose.py" name="initpose_publisher" args="$(arg car_name)" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
-  </group>
 </launch>
