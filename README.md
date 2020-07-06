@@ -55,7 +55,7 @@ sudo apt install ros-[melodic]-vrpn_client_ros
 export ROS_IP=192.168.0.156
 ```
 
-7. Launch the vrpn client. See the launch file as an example.
+7. Launch the vrpn client. You need to update `vrpn.launch` with the list of rigid body names you want to be streamed from Optitrack Motive. The names of the rigid bodies should match those in Motive's `Assets` list. See the launch file as an example.
 
    ```bash
    roslaunch mushr_mocap vrpn.launch car_name:=car35 # in a new terminal

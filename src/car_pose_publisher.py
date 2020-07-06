@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     rospy.init_node("pose_publisher")
 
-    pub_topic = "mocap_pose"
+    pub_topic = rospy.get_param(rospy.search_param("topic_name"))
     publisher = rospy.Publisher(pub_topic, PoseStamped, queue_size=1)
     subscriber = rospy.Subscriber("/vrpn_client_node/{}/pose".format(car_name), PoseStamped, publish_car_pose)
     rospy.spin()
