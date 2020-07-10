@@ -21,4 +21,5 @@
 
     </rosparam>
   </node>
+  <node pkg="topic_tools" type="relay" name="pose_relay" args="/vrpn_client_node/$(arg car_name)/pose $(arg car_name)/car_pose" />
 </launch>
