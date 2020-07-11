@@ -18,8 +18,19 @@
       <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
        - $(arg car_name) # Name of the rigid body asset
+       - car34
+       - car35
+       - car37
+       - car38
 
     </rosparam>
   </node>
   <node pkg="topic_tools" type="relay" name="pose_relay" args="/vrpn_client_node/$(arg car_name)/pose $(arg car_name)/car_pose" />
+
+  <!-- remap everything else -->
+  <remap from="/car34/car_pose" to="/vrpn_client_node/car34/pose"/>
+  <remap from="/car35/car_pose" to="/vrpn_client_node/car35/pose"/>
+  <remap from="/car37/car_pose" to="/vrpn_client_node/car37/pose"/>
+  <remap from="/car38/car_pose" to="/vrpn_client_node/car38/pose"/>
+
 </launch>
