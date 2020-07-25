@@ -18,7 +18,6 @@
       <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
        - $(arg car_name) # Name of the rigid body asset
-       - car34
        - car35
        - car37
        - car38
