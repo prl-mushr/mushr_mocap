@@ -1,7 +1,8 @@
 <launch>
 
   <arg name="server" default="192.168.1.183"/>
-  <arg name="car_name" default="car_30" />
+  <arg name="car1_name" default="car30" />
+  <arg name="car2_name" default="car38" />
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
     <rosparam subst_value="true">
       server: $(arg server)
@@ -17,7 +18,8 @@
       # Must either specify refresh frequency > 0.0, or a list of trackers to create
       <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
-       - $(arg car_name) # Name of the rigid body asset
+       - $(arg car1_name) # Name of the rigid body asset
+       - $(arg car2_name) # Name of the rigid body asset
 
     </rosparam>
   </node>

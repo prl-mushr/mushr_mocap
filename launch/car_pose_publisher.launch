@@ -1,5 +1,6 @@
 <launch>
-  <arg name="car_name" default="car" />
+  <arg name="car1_name" default="car30" />
+  <arg name="car2_name" default="car38" />
   <arg name="topic_name" default="car_pose" />
 
   <!-- Uncomment this if you just want to publish the static transform. Sets static transform between VRPN-published mocap car pose to the car pose (i.e. base_link) -->
@@ -7,8 +8,14 @@
 <!--   <node pkg="tf" type="static_transform_publisher" name="mocap_static_tf_publisher" args="0.058325 0. -0.08125 0 0 1 0  $(arg car_name) $(arg car_name)/mocap_pose 1000"/>
  -->
 
-  <group ns="$(arg car_name)" >
-    <node pkg="mushr_mocap" type="car_pose_publisher.py" name="mocap_publisher" args="$(arg car_name)" output="screen">
+  <group ns="$(arg car1_name)" >
+    <node pkg="mushr_mocap" type="car_pose_publisher.py" name="mocap_publisher1" args="$(arg car1_name)" output="screen">
+        <param name="topic_name" value="$(arg topic_name)" />
+    </node>
+  </group>
+
+  <group ns="$(arg car2_name)" >
+    <node pkg="mushr_mocap" type="car_pose_publisher.py" name="mocap_publisher2" args="$(arg car2_name)" output="screen">
         <param name="topic_name" value="$(arg topic_name)" />
     </node>
   </group>
