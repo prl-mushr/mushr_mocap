@@ -37,7 +37,7 @@ sudo apt install ros-[melodic]-vrpn-client-ros
 3. Build
 
    ```bash
-   catkin build
+   catkin_make
    ```
 
 4. Check that the machine is connected to the same wifi router (TP_Link_F0D9_5G).
@@ -45,14 +45,14 @@ sudo apt install ros-[melodic]-vrpn-client-ros
 5. Check that you can ping to the windows machine.
 
    ```bash
-   ping 192.168.0.183
+   ping 192.168.1.183
    ```
 
    should return some bytes.
    
 6. Set $ROS_IP to match the IP of this machine, e.g. 
 ```bash
-export ROS_IP=192.168.0.156
+export ROS_IP=[current computer's IP]
 ```
 
 7. Launch the vrpn client. You need to update `vrpn.launch` with the list of rigid body names you want to be streamed from Optitrack Motive. The names of the rigid bodies should match those in Motive's `Assets` list. See the launch file as an example.
