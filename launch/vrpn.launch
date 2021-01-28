@@ -1,7 +1,7 @@
 <launch>
 
-  <arg name="server" default="192.168.0.183"/>
-  <arg name="car_name" default="car" />
+  <arg name="server" default="192.168.1.183"/>
+  <arg name="car_name" default="car_30" />
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
     <rosparam subst_value="true">
       server: $(arg server)
@@ -21,5 +21,7 @@
 
     </rosparam>
   </node>
-  <node pkg="topic_tools" type="relay" name="pose_relay" args="/vrpn_client_node/$(arg car_name)/pose $(arg car_name)/car_pose" />
+  <!-- <node pkg="topic_tools" type="relay" name="pose_relay" args="/vrpn_client_node/$(arg car_name)/pose $(arg car_name)/car_pose" /> 
+-->
+
 </launch>

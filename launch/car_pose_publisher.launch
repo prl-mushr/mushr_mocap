@@ -1,6 +1,6 @@
 <launch>
   <arg name="car_name" default="car" />
-  <arg name="topic_name" default="mocap_pose" />
+  <arg name="topic_name" default="car_pose" />
 
   <!-- Uncomment this if you just want to publish the static transform. Sets static transform between VRPN-published mocap car pose to the car pose (i.e. base_link) -->
   <!-- The point on the top surface in the center of those 4 points has the following offset w.r.t the base_link: (-0.058325, 0.0, 0.08125)-->
@@ -8,7 +8,7 @@
  -->
 
   <group ns="$(arg car_name)" >
-    <node pkg="mushr_mocap" type="car_pose_publisher.py" name="mocap_publisher" args="$(arg car_name)">
+    <node pkg="mushr_mocap" type="car_pose_publisher.py" name="mocap_publisher" args="$(arg car_name)" output="screen">
         <param name="topic_name" value="$(arg topic_name)" />
     </node>
   </group>

@@ -18,11 +18,12 @@ def publish_car_pose(msg):
     orientation = msg.pose.orientation
     quat = [orientation.x, orientation.y, orientation.z, orientation.w]
     rotation = quaternion_matrix(quat)
+  
 
     # rotate axes
-    R = np.array([[0,   1,  0],
-                  [0,   0,  1],
-                  [1,   0,  0]], dtype=np.float32)
+    R = np.array([[0,   -1,  0],
+                  [1,   0,  0],
+                  [0,   0,  1]], dtype=np.float32)
 
     R2 = np.array([[0,  0, 1],
                   [1,   0,  0],
@@ -33,15 +34,16 @@ def publish_car_pose(msg):
                    [0,  0,  1]], dtype=np.float32)
             
 
-    # rotation[:3,:3] = np.dot(np.dot(R2, np.dot(rotation[:3,:3], R)), R3)
-    rotation[:3,:3] = np.dot(R3, np.dot(R2, np.dot(rotation[:3,:3], R)))
+    #rotation[:3,:3] = np.dot(np.dot(R2, np.dot(rotation[:3,:3], R)), R3)
+    #rotation[:3,:3] = np.dot(R3, np.dot(R2, np.dot(rotation[:3,:3], R)))
+    rotation[:3,:3] = np.dot(rotation[:3,:3], R)
     
     q = quaternion_from_matrix(rotation)
 
     p = deepcopy(msg)
-    p.pose.position.x = msg.pose.position.z + 0.058325
-    p.pose.position.y = msg.pose.position.x
-    p.pose.position.z = msg.pose.position.y - 0.081250
+    p.pose.position.x = msg.pose.position.x + 0.058325
+    p.pose.position.y = msg.pose.position.y
+    p.pose.position.z = msg.pose.position.z - 0.081250
 
     p.pose.orientation.x = q[0]
     p.pose.orientation.y = q[1]
