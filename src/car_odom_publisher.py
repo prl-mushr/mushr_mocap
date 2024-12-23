@@ -14,6 +14,9 @@ class OdomPublisher:
         self.alpha = alpha  # Low-pass filter coefficient (0 < alpha <= 1)
         self.filtered_velocity = np.array([0.0, 0.0, 0.0])  # Initial filtered velocity
 
+        self.last_publish = rospy.Time.now().to_sec()
+        self.pub_rate = 100.0
+
         self.odom_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
         self.velocity_pub = rospy.Publisher("car_velocity", Twist, queue_size=1)
         rospy.Subscriber("car_pose", PoseStamped, self.pose_callback)
@@ -44,20 +47,22 @@ class OdomPublisher:
                 )
 
                 # Publish the filtered velocity
-                twist_msg = Twist()
-                twist_msg.linear.x = self.filtered_velocity[0]
-                twist_msg.linear.y = self.filtered_velocity[1]
-                twist_msg.linear.z = self.filtered_velocity[2]
+                if (current_time.to_sec()-self.last_publish >= 1.0/self.pub_rate):
+                    self.last_publish = current_time.to_sec()
+                    twist_msg = Twist()
+                    twist_msg.linear.x = self.filtered_velocity[0]
+                    twist_msg.linear.y = self.filtered_velocity[1]
+                    twist_msg.linear.z = self.filtered_velocity[2]
 
-                twist_covar_msg = TwistWithCovariance()
-                twist_covar_msg.twist = twist_msg
-                pos_covar_msg = PoseWithCovariance()
-                pos_covar_msg.pose = msg.pose
-                odom_msg = Odometry()
-                odom_msg.pose = pos_covar_msg
-                odom_msg.twist = twist_covar_msg
-                self.odom_pub.publish(odom_msg)
-                self.velocity_pub.publish(twist_msg)
+                    twist_covar_msg = TwistWithCovariance()
+                    twist_covar_msg.twist = twist_msg
+                    pos_covar_msg = PoseWithCovariance()
+                    pos_covar_msg.pose = msg.pose
+                    odom_msg = Odometry()
+                    odom_msg.pose = pos_covar_msg
+                    odom_msg.twist = twist_covar_msg
+                    self.odom_pub.publish(odom_msg)
+                    self.velocity_pub.publish(twist_msg)
 
         # Update the last pose and time
         self.last_pose = msg
