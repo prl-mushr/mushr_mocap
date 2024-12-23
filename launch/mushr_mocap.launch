@@ -2,7 +2,7 @@
    <!-- this is the IP address of the windows system publishing the mocap poses -->
    <arg name="server" default="192.168.0.241"/>
    <!-- this is the asset name you have assigned in the mocap system to the car -->
-   <arg name="asset_name" default="mushrv4"/> 
+   <arg name="asset_name" default="hound"/> 
    <!-- This is the prefix that the mocap pose will be published to, i.e., car/mocap_pose -->
    <arg name="car_name" default="car" />
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
