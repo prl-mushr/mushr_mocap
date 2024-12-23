@@ -3,6 +3,32 @@
   <arg name="pose_topic" default="mocap_pose" />
   <arg name="odom_topic" default="car_odom" />
   <arg name="filter_alpha" default="0.2" />
+  <!-- this is the IP address of the windows system publishing the mocap poses -->
+  <arg name="server" default="192.168.0.241"/>
+  <!-- this is the asset name you have assigned in the mocap system to the car -->
+  <arg name="asset_name" default="hound"/> 
+
+  <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
+    <rosparam subst_value="true">
+      server: $(arg server)
+      port: 3883
+
+      update_frequency: 360.0
+      frame_id: map
+
+      # Use the VRPN server's time, or the client's ROS time.
+      use_server_time: false
+      broadcast_tf: true
+
+      # Must either specify refresh frequency > 0.0, or a list of trackers to create
+      <!-- refresh_tracker_frequency: 1.0 -->
+      trackers:
+       - $(arg asset_name) # Name of the rigid body asset
+
+    </rosparam>
+  </node>
+  <node pkg="mushr_mocap" type="relay_mocap.py" name="relay" args="$(arg asset_name) $(arg car_name)" output="screen" />
+
 
   <group ns="$(arg car_name)">
     <node pkg="mushr_mocap" type="car_odom_publisher.py" name="odom_publisher" output="screen">
@@ -14,4 +40,5 @@
       <param name="alpha" value="$(arg filter_alpha)" />
     </node>
   </group>
+
 </launch>
