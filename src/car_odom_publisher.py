@@ -17,7 +17,7 @@ class OdomPublisher:
         self.velocity_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
         rospy.Subscriber("car_pose", PoseStamped, self.pose_callback)
 
-    def pose_callback(self, msg: PoseStamped):
+    def pose_callback(self, msg):
         current_time = rospy.Time.now()
         
         # If we have a previous pose, calculate velocity
