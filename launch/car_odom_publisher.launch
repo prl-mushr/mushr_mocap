@@ -1,0 +1,17 @@
+<launch>
+  <arg name="car_name" default="car" />
+  <arg name="pose_topic" default="mocap_pose" />
+  <arg name="odom_topic" default="car_odom" />
+  <arg name="filter_alpha" default="0.2" />
+
+  <group ns="$(arg car_name)">
+    <node pkg="mushr_mocap" type="car_odom_publisher.py" name="odom_publisher" output="screen">
+      <!-- Pass the car pose topic to the velocity publisher -->
+      <remap from="car_pose" to="$(arg pose_topic)" />
+      <!-- Publish the filtered velocity on the specified topic -->
+      <remap from="car_odom" to="$(arg odom_topic)" />
+      <!-- Parameter to set the alpha value for the low-pass filter -->
+      <param name="alpha" value="$(arg filter_alpha)" />
+    </node>
+  </group>
+</launch>
