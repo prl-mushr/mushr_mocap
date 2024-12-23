@@ -14,7 +14,8 @@ class OdomPublisher:
         self.alpha = alpha  # Low-pass filter coefficient (0 < alpha <= 1)
         self.filtered_velocity = np.array([0.0, 0.0, 0.0])  # Initial filtered velocity
 
-        self.velocity_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
+        self.odom_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
+        self.velocity_pub = rospy.Publisher("car_velocity", Twist, queue_size=1)
         rospy.Subscriber("car_pose", PoseStamped, self.pose_callback)
 
     def pose_callback(self, msg):
@@ -55,7 +56,8 @@ class OdomPublisher:
                 odom_msg = Odometry()
                 odom_msg.pose = pos_covar_msg
                 odom_msg.twist = twist_covar_msg
-                self.velocity_pub.publish(odom_msg)
+                self.odom_pub.publish(odom_msg)
+                self.velocity_pub.publish(twist_msg)
 
         # Update the last pose and time
         self.last_pose = msg
