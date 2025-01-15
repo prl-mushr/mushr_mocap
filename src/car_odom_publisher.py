@@ -20,6 +20,7 @@ class OdomPublisher:
         self.odom_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
         rospy.Subscriber("car_pose", PoseStamped, self.pose_callback)
         self.odom_msg = Odometry()
+        self.main_loop()
 
     def main_loop(self):
         rate = rospy.Rate(self.pub_rate)
