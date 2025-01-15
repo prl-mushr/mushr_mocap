@@ -20,12 +20,14 @@ class OdomPublisher:
         self.odom_pub = rospy.Publisher("car_odom", Odometry, queue_size=1)
         rospy.Subscriber("car_pose", PoseStamped, self.pose_callback)
         self.odom_msg = Odometry()
+        self.update_odom = False
         self.main_loop()
 
     def main_loop(self):
         rate = rospy.Rate(self.pub_rate)
         while not rospy.is_shutdown():
-            self.odom_pub.publish(self.odom_msg)
+            if self.update_odom:
+                self.odom_pub.publish(self.odom_msg)
             rate.sleep()
 
     def pose_callback(self, msg):
@@ -65,6 +67,7 @@ class OdomPublisher:
                 pos_covar_msg.pose = msg.pose
                 self.odom_msg.pose = pos_covar_msg
                 self.odom_msg.twist = twist_covar_msg
+                self.update_odom = True
 
         # Update the last pose and time
         self.last_pose = msg
