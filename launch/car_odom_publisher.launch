@@ -1,7 +1,8 @@
 <launch>
   <arg name="car_name" default="mavros" />
-  <arg name="pose_topic" default="mocap_pose" />
   <arg name="odom_topic" default="local_position/odom" />
+  <arg name="pose_topic" default="local_position/pose" />
+
   <arg name="filter_alpha" default="0.2" />
   <!-- this is the IP address of the windows system publishing the mocap poses -->
   <arg name="server" default="192.168.0.241"/>
