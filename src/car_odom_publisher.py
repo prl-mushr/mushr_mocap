@@ -103,7 +103,7 @@ class OdomPublisher:
                 self.odom_msg.header.frame_id = "map"  # or any relevant frame_id
                 self.odom_msg.child_frame_id = "base_link"
                 self.pose_msg.header.stamp = timestamp
-                self.pose_msg.header.frame_id = "base_link"  # or any relevant frame_id
+                self.pose_msg.header.frame_id = "map"  # or any relevant frame_id
                 self.pose_msg.pose = msg.pose
 
                 twist_covar_msg = TwistWithCovariance()
