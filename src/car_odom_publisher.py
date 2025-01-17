@@ -28,6 +28,8 @@ class OdomPublisher:
         self.odom_msg = Odometry()
         self.pose_msg = PoseStamped()
         self.update_odom = False
+        self.max_accel = 20.0
+        self.raw_vel = np.array([0.0,0.0,0.0])
         self.main_loop()
 
     def main_loop(self):
@@ -85,6 +87,11 @@ class OdomPublisher:
 
                 rotation_matrix = quaternion_matrix(quat)[:3, :3]
                 velocity_body = np.dot(rotation_matrix.T, velocity_global)
+
+                vfilter = np.abs(self.raw_vel-velocity_body)/dt < self.max_accel
+                self.raw_vel = velocity_body
+                
+                velocity_body = velocity_body*vfilter + self.filtered_velocity * (vfilter == 0)
 
                 # Apply low-pass filter
                 self.filtered_velocity = (
