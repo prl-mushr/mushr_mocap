@@ -1,5 +1,5 @@
 <launch>
-  <arg name="car_name" default="mavros" />
+  <arg name="mocap_topic" default="mocap" />
   <arg name="odom_topic" default="local_position/odom" />
   <arg name="pose_topic" default="local_position/pose" />
 
@@ -28,10 +28,10 @@
 
     </rosparam>
   </node>
-  <node pkg="mushr_mocap" type="relay_mocap.py" name="relay" args="$(arg asset_name) $(arg car_name)" output="screen" />
+  <node pkg="mushr_mocap" type="relay_mocap.py" name="relay" args="$(arg asset_name) $(arg mocap_topic)" output="screen" />
 
 
-  <group ns="$(arg car_name)">
+  <group ns="$(arg mocap_topic)">
     <node pkg="mushr_mocap" type="car_odom_publisher.py" name="odom_publisher" output="screen">
       <!-- Pass the car pose topic to the velocity publisher -->
       <remap from="car_pose" to="$(arg pose_topic)" />

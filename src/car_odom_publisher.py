@@ -22,7 +22,7 @@ class OdomPublisher:
         self.pose_pub = rospy.Publisher("car_pose", PoseStamped, queue_size=1)
         
         rospy.Subscriber("mocap_pose", PoseStamped, self.pose_callback)
-        rospy.Subscriber("imu/data", Imu, self.imu_callback)
+        # rospy.Subscriber("imu/data", Imu, self.imu_callback)
 
         self.imu_ori = [0.0,0.0,0.0]
         self.odom_msg = Odometry()
@@ -41,14 +41,14 @@ class OdomPublisher:
                 self.update_odom = False
             rate.sleep()
 
-    def imu_callback(self, msg):
-        quaternion = (
-            msg.orientation.x,
-            msg.orientation.y,
-            msg.orientation.z,
-            msg.orientation.w
-        )
-        self.imu_ori = euler_from_quaternion(quaternion)
+    # def imu_callback(self, msg):
+    #     quaternion = (
+    #         msg.orientation.x,
+    #         msg.orientation.y,
+    #         msg.orientation.z,
+    #         msg.orientation.w
+    #     )
+    #     self.imu_ori = euler_from_quaternion(quaternion)
     
     def pose_callback(self, msg):
         current_time = rospy.Time.now()
@@ -66,20 +66,20 @@ class OdomPublisher:
 
                 # Convert velocity to body frame
                 orientation = msg.pose.orientation
-                quaternion = (
+                quat = (
                     orientation.x,
                     orientation.y,
                     orientation.z,
                     orientation.w
                 )
                 #use imu for roll and pitch
-                rpy = euler_from_quaternion(quaternion)
-                ori = [0,0,0]
-                ori[0] = self.imu_ori[0]
-                ori[1] = self.imu_ori[1]
-                ori[2] = rpy[2]
+                # rpy = euler_from_quaternion(quat)
+                # ori = [0,0,0]
+                # ori[0] = self.imu_ori[0]
+                # ori[1] = self.imu_ori[1]
+                # ori[2] = rpy[2]
 
-                quat = quaternion_from_euler(*ori, 'sxyz')
+                # quat = quaternion_from_euler(*ori, 'sxyz')
                 msg.pose.orientation.x = quat[0]
                 msg.pose.orientation.y = quat[1]
                 msg.pose.orientation.z = quat[2]
