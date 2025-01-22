@@ -1,7 +1,12 @@
 <launch>
-
   <arg name="server" default="192.168.1.183"/>
   <arg name="car_name" default="car" />
+  <arg name="ramp_1" default="ramp1" />
+  <arg name="ramp_2" default="ramp2" />
+  <arg name="block_1" default="block1" />
+  <arg name="block_2" default="block2" />
+  <arg name="block_3" default="block3" />
+  <arg name="block_4" default="block4" />
   <node pkg="vrpn_client_ros" type="vrpn_client_node" name="vrpn_client_node" output="screen">
     <rosparam subst_value="true">
       server: $(arg server)
@@ -18,8 +23,24 @@
       <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
        - $(arg car_name) # Name of the rigid body asset
+       - $(arg ramp_1)
+       - $(arg ramp_2)
+       - $(arg block_1)
+       - $(arg block_2)
+       - $(arg block_3)
+       - $(arg block_4)
 
     </rosparam>
   </node>
   <node pkg="topic_tools" type="relay" name="pose_relay" args="/vrpn_client_node/$(arg car_name)/pose $(arg car_name)/car_pose" />
+  <node pkg="topic_tools" type="relay" name="ramp1_pose_relay" args="/vrpn_client_node/$(arg ramp_1)/pose $(arg ramp_1)/pose" />
+  <node pkg="topic_tools" type="relay" name="ramp2_pose_relay" args="/vrpn_client_node/$(arg ramp_2)/pose $(arg ramp_2)/pose" />
+  <node pkg="topic_tools" type="relay" name="block1_pose_relay" args="/vrpn_client_node/$(arg block_1)/pose $(arg block_1)/pose" />
+  <node pkg="topic_tools" type="relay" name="block2_pose_relay" args="/vrpn_client_node/$(arg block_2)/pose $(arg block_2)/pose" />
+  <node pkg="topic_tools" type="relay" name="block3_pose_relay" args="/vrpn_client_node/$(arg block_3)/pose $(arg block_3)/pose" />
+  <node pkg="topic_tools" type="relay" name="block4_pose_relay" args="/vrpn_client_node/$(arg block_4)/pose $(arg block_4)/pose" />
+  <rosparam>
+      tracked_objects: [$(arg ramp_1), $(arg ramp_1), $(arg block_1), $(arg block_2), $(arg block_3), $(arg block_4)]
+  </rosparam>
+  <node pkg="mushr_mocap" type="block_pose.py" name="pose_offset_node" output="screen">
 </launch>
