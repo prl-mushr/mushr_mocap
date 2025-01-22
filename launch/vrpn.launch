@@ -39,8 +39,15 @@
   <node pkg="topic_tools" type="relay" name="block2_pose_relay" args="/vrpn_client_node/$(arg block_2)/pose $(arg block_2)/pose" />
   <node pkg="topic_tools" type="relay" name="block3_pose_relay" args="/vrpn_client_node/$(arg block_3)/pose $(arg block_3)/pose" />
   <node pkg="topic_tools" type="relay" name="block4_pose_relay" args="/vrpn_client_node/$(arg block_4)/pose $(arg block_4)/pose" />
-  <rosparam>
-      tracked_objects: [$(arg ramp_1), $(arg ramp_1), $(arg block_1), $(arg block_2), $(arg block_3), $(arg block_4)]
-  </rosparam>
   <node pkg="mushr_mocap" type="block_pose.py" name="pose_offset_node" output="screen">
+    <rosparam param="tracked_objects" subst_value="true">
+      [$(arg car_name),
+       $(arg ramp_1),
+       $(arg ramp_2),
+       $(arg block_1),
+       $(arg block_2),
+       $(arg block_3),
+       $(arg block_4)]
+    </rosparam>
+  </node>
 </launch>
