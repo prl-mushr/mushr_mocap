@@ -1,12 +1,12 @@
 <launch>
-  <arg name="mocap_topic" default="mocap" />
+  <arg name="mocap_topic" default="mavros" />
   <arg name="odom_topic" default="local_position/odom" />
   <arg name="pose_topic" default="local_position/pose" />
 
   <arg name="filter_alpha" default="0.2" />
   <!-- this is the IP address of the windows system publishing the mocap poses -->
   <arg name="server" default="192.168.0.241"/>
-  <arg name="asset_name" default="hound" />
+  <arg name="asset_name" default="hound2" />
   <arg name="ramp_1" default="ramp1" />
   <arg name="ramp_2" default="ramp2" />
   <arg name="block_1" default="block1" />
@@ -28,7 +28,7 @@
       # Must either specify refresh frequency > 0.0, or a list of trackers to create
       <!-- refresh_tracker_frequency: 1.0 -->
       trackers:
-       - $(arg car_name) # Name of the rigid body asset
+       - $(arg asset_name) # Name of the rigid body asset
        - $(arg ramp_1)
        - $(arg ramp_2)
        - $(arg block_1)
