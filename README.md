@@ -24,7 +24,7 @@ This instruction assumes that you're using the windows machine setup in CSE 014 
 
 1. Install `vrpn_client_ros` via :
 ```bash
-sudo apt install ros-[melodic]-vrpn-client-ros
+sudo apt install ros-noetic-vrpn-client-ros
 ```
 
 2. Clone this repository
@@ -72,7 +72,7 @@ sudo apt install ros-[melodic]-vrpn-client-ros
    ```
    You can also set these during launch.
 
-## Running the MuSHR mocap:
+## Getting Vehicle Odometry from Mocap:
 
 1. Make sure that Motive is already running on the windows machine and publishing the pose of the vehicle, and that the MuSHR is connected to the same network as the windows machine (in UW's case, the TP_Link_F0D9_5G).
 
@@ -83,43 +83,21 @@ sudo apt install ros-[melodic]-vrpn-client-ros
 
 3. Now, run the following command:
    ```bash
-   roslaunch mushr_mocap mushr_mocap.launch server:=<WINDOWS_IP> asset_name:=<asset_name> car_name:=<car_name>
+   roslaunch mushr_mocap car_odom_publisher.launch server:=<WINDOWS_IP> asset_name:=<asset_name> car_name:=<car_name> odom_topic:=<odometry_topic> pose_topic:=<position_topic>
    ```
    Note that as the arguments do have default values, if you're only tracking one asset, you could just set the default values in the launch file and run:
    ```bash
    roslaunch mushr_mocap mushr_mocap.launch
    ```
 
-<!-- 6. Set $ROS_IP to match the IP of this machine, e.g. 
+## Getting the position of obstacles from Mocap:
+1. Make sure that Motive is already running on the windows machine and publishing the pose of the vehicle, and that the MuSHR is connected to the same network as the windows machine (in UW's case, the TP_Link_F0D9_5G).
+
+2. If you're using MuSHR V4, start the docker using:
+   ```bash
+   mushr_noetic
+   ```
+3. Now run the following command:
 ```bash
-export ROS_IP=[current computer's IP]
+roslaunch mushr_mocap object_publisher.launch server:=<WINDOWS_IP>
 ```
-
-7. Launch the vrpn client. You need to update `vrpn.launch` with the list of rigid body names you want to be streamed from Optitrack Motive. The names of the rigid bodies should match those in Motive's `Assets` list. See the launch file as an example.
-
-   ```bash
-   roslaunch mushr_mocap vrpn.launch car_name:=car35 # in a new terminal
-   ```
-
-8. You should be able to check the raw mocap topic published as `vrpn_client_node/car_name/pose`
-
-   ```bash
-   rostopic echo /vrpn_client_node/car35/pose
-   ```
-
-9. Publish the transformed car pose (changes the axis orientation and takes into account the offset to base_link):
-
-   ```bash
-   roslaunch mushr_mocap car_pose_publisher car_name:=car35
-   ```
-Check the topic
-   ```bash
-   rostopic echo /car35/mocap_pose
-   ```
-
-   If you want this to be in a different topic name, modify `car_pose_publisher.py`. -->
-
-4. To publish to `car_name/initialpose` topic (this one is a bit WIP),
-   ```bash
-   roslaunch mushr_mocap set_init_pose.launch car_name:=car35
-   ```
